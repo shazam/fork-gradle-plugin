@@ -1,0 +1,46 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url SHAZAM_PUBLIC_REPOSITORY
+        credentials {
+            username SHAZAM_NEXUS_USERNAME
+            password SHAZAM_NEXUS_PASSWORD
+        }
+    }
+}
+
+apply plugin: 'groovy'
+apply plugin: 'project-report'
+apply from: 'build-scripts/gradle-mvn-push.gradle'
+
+version = VERSION_NAME
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.12'
+}
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+    compile 'com.shazam.fork:fork:0.9.0-SNAPSHOT'
+    compile 'com.android.tools.build:gradle:0.10.4'
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Fork Gradle plugin',
+                'Implementation-Version': version,
+                'Built-By': System.getProperty('user.name'),
+                'Built-Date': new Date(),
+                'Built-JDK': System.getProperty('java.version'),
+                'Built-Gradle': gradle.gradleVersion
+    }
+}
+
+
