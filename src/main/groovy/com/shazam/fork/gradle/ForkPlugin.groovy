@@ -50,27 +50,11 @@ class ForkPlugin implements Plugin<Project> {
             List<ForkRunTask> tasks = createTask(variant, project, "")
             tasks.each {
                 it.configure {
-                    title = "$project.name $variant.name"
                     description = "Runs instrumentation tests on all the connected devices for '${variant.name}' variation and generates a report with screenshots"
                 }
             }
 
             forkTask.dependsOn tasks
-
-            project.tasks.addRule(patternString(taskName)) { String ruleTaskName ->
-                if (ruleTaskName.startsWith(taskName)) {
-                    String size = (ruleTaskName - taskName).toLowerCase(Locale.US)
-                    if (isValidSize(size)) {
-                        List<ForkRunTask> sizeTasks = createTask(variant, project, size.capitalize())
-                        sizeTasks.each {
-                            it.configure {
-                                title = "$project.name $variant.name - $size tests"
-                                testSize = size
-                            }
-                        }
-                    }
-                }
-            }
         }
 
         project.tasks.addRule(patternString("fork")) { String ruleTaskName ->
@@ -123,21 +107,7 @@ class ForkPlugin implements Plugin<Project> {
                 }
                 output = new File(outputBase, projectOutput.dirName)
 
-                debug = config.debug
                 ignoreFailures = config.ignoreFailures
-                devices = config.devices
-                allDevices = !config.devices
-                noAnimations = config.noAnimations
-                failIfNoDeviceConnected = config.failIfNoDeviceConnected
-
-                testSize = ForkRunTask.TEST_SIZE_ALL
-
-                if (config.className) {
-                    className = config.className
-                    if (config.methodName) {
-                        methodName = config.methodName
-                    }
-                }
 
                 dependsOn projectOutput.assemble, variant.assemble
             }
