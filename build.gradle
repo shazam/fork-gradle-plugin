@@ -6,13 +6,6 @@ buildscript {
 
 repositories {
     mavenCentral()
-    maven {
-        url SHAZAM_PUBLIC_REPOSITORY
-        credentials {
-            username SHAZAM_NEXUS_USERNAME
-            password SHAZAM_NEXUS_PASSWORD
-        }
-    }
 }
 
 apply plugin: 'groovy'
