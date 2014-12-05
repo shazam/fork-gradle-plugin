@@ -12,8 +12,10 @@
  */
 package com.shazam.fork.gradle
 
-import com.android.build.gradle.AppExtension
 import com.android.build.gradle.AppPlugin
+import com.android.build.gradle.BaseExtension
+import com.android.build.gradle.LibraryPlugin
+import com.android.build.gradle.api.ApkVariantOutput
 import com.android.build.gradle.api.TestVariant
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -30,28 +32,29 @@ class ForkPlugin implements Plugin<Project> {
     @Override
     void apply(final Project project) {
 
-        if (!project.plugins.withType(AppPlugin)) {
+        if (!project.plugins.findPlugin(AppPlugin) && !project.plugins.findPlugin(LibraryPlugin)) {
             throw new IllegalStateException("Android plugin is not found")
         }
 
         project.extensions.add "fork", ForkExtension
 
-        def forkTask = project.task("fork") {
+        def forkTask = project.task(TASK_PREFIX) {
             group = JavaBasePlugin.VERIFICATION_GROUP
-            description = "Runs all the instrumentation test variations on connected devices"
+            description = "Runs all the instrumentation test variations on all the connected devices"
         }
 
-        AppExtension android = project.android
+        BaseExtension android = project.android
         android.testVariants.all { TestVariant variant ->
 
             String taskName = "${TASK_PREFIX}${variant.name.capitalize()}"
-            ForkRunTask task = createTask(taskName, variant, project)
-
-            task.configure {
-                description = "Runs instrumentation tests on connected devices for '${variant.name}' variation and generates a report with screenshots"
+            List<ForkRunTask> tasks = createTask(variant, project, "")
+            tasks.each {
+                it.configure {
+                    description = "Runs instrumentation tests on all the connected devices for '${variant.name}' variation and generates a report with screenshots"
+                }
             }
 
-            forkTask.dependsOn task
+            forkTask.dependsOn tasks
         }
 
         project.tasks.addRule(patternString("fork")) { String ruleTaskName ->
@@ -70,28 +73,45 @@ class ForkPlugin implements Plugin<Project> {
         }
     }
 
+    private static boolean isValidSize(String size) {
+        return size in ['small', 'medium', 'large']
+    }
+
+    private static String lowercase(final String s) {
+        return s[0].toLowerCase(Locale.US) + s.substring(1)
+    }
+
     private static String patternString(final String taskName) {
         return "Pattern: $taskName<TestSize>: run instrumentation tests of particular size"
     }
 
-    private static ForkRunTask createTask(final String name, final TestVariant variant, final Project project) {
-        ForkExtension config = project.fork
-        ForkRunTask task = project.tasks.create(name, ForkRunTask)
-
-        task.configure {
-            group = JavaBasePlugin.VERIFICATION_GROUP
-            applicationApk = variant.testedVariant.outputFile
-            instrumentationApk = variant.outputFile
-
-            File outputBase = config.baseOutputDir
-            if (!outputBase) {
-                outputBase = new File(project.buildDir, "fork")
-            }
-            output = new File(outputBase, variant.testedVariant.dirName)
-            ignoreFailures = config.ignoreFailures
-
-            dependsOn variant.assemble, variant.testedVariant.assemble
+    private static List<ForkRunTask> createTask(final TestVariant variant, final Project project, final String suffix) {
+        if (variant.outputs.size() > 1) {
+            throw new UnsupportedOperationException("Fork plugin for gradle does not support abi/density splits for test apks")
         }
+        ForkExtension config = project.fork
+        return variant.testedVariant.outputs.collect { def projectOutput ->
+            ForkRunTask task = project.tasks.create("${TASK_PREFIX}${projectOutput.name.capitalize()}${suffix}", ForkRunTask)
+            task.configure {
+                group = JavaBasePlugin.VERIFICATION_GROUP
+                if (projectOutput instanceof ApkVariantOutput) {
+                    applicationApk = projectOutput.outputFile
+                } else {
+                    applicationApk = variant.outputs[0].outputFile
+                }
+                instrumentationApk = variant.outputs[0].outputFile
+
+                File outputBase = config.baseOutputDir
+                if (!outputBase) {
+                    outputBase = new File(project.buildDir, "fork")
+                }
+                output = new File(outputBase, projectOutput.dirName)
+
+                ignoreFailures = config.ignoreFailures
+
+                dependsOn projectOutput.assemble, variant.assemble
+            }
+        } as List<ForkRunTask>
     }
 
 }

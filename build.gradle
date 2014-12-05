@@ -15,13 +15,13 @@ apply from: 'build-scripts/gradle-mvn-push.gradle'
 version = VERSION_NAME
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.12'
+    gradleVersion = '2.1'
 }
 
 dependencies {
     compile gradleApi()
     compile localGroovy()
-    compile 'com.shazam.fork:fork:0.9.1'
+    compile 'com.shazam.fork:fork:0.10.0-SNAPSHOT'
     compile 'com.android.tools.build:gradle:1.0.0-rc4'
 }
 
