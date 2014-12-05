@@ -6,6 +6,9 @@ buildscript {
 
 repositories {
     mavenCentral()
+    maven {
+        url SNAPSHOT_REPOSITORY_URL
+    }
 }
 
 apply plugin: 'groovy'
