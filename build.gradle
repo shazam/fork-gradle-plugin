@@ -4,16 +4,16 @@ buildscript {
     }
 }
 
-repositories {
-    mavenCentral()
-    maven {
-        url SNAPSHOT_REPOSITORY_URL
-    }
-}
-
 apply plugin: 'groovy'
 apply plugin: 'project-report'
 apply from: 'build-scripts/gradle-mvn-push.gradle'
+
+repositories {
+    mavenCentral()
+    maven {
+        url snapshotRepositoryUrl()
+    }
+}
 
 version = VERSION_NAME
 
