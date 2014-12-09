@@ -6,8 +6,10 @@ buildscript {
 
 repositories {
     mavenCentral()
+
+    def snapshotRepoUrl = project.hasProperty('SNAPSHOT_REPOSITORY_URL') ? SNAPSHOT_REPOSITORY_URL : 'https://oss.sonatype.org/content/repositories/snapshots'
     maven {
-        url SNAPSHOT_REPOSITORY_URL
+        url snapshotRepoUrl
     }
 }
 
@@ -16,6 +18,8 @@ apply plugin: 'project-report'
 apply from: 'build-scripts/gradle-mvn-push.gradle'
 
 version = VERSION_NAME
+
+sourceCompatibility = JavaVersion.VERSION_1_7
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.1'
