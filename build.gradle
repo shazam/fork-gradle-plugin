@@ -26,8 +26,8 @@ task wrapper(type: Wrapper) {
 dependencies {
     compile gradleApi()
     compile localGroovy()
-    compile 'com.shazam.fork:fork:0.10.0-SNAPSHOT'
-    compile 'com.android.tools.build:gradle:1.0.0-rc4'
+    compile 'com.shazam.fork:fork:0.10.0'
+    compile 'com.android.tools.build:gradle:1.0.0'
 }
 
 jar {
