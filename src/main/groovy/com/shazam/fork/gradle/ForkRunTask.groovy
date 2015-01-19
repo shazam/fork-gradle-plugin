@@ -12,7 +12,7 @@
  */
 package com.shazam.fork.gradle
 
-import com.shazam.fork.Fork
+import com.shazam.fork.ForkBuilder
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.tasks.InputFile
@@ -21,8 +21,6 @@ import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.VerificationTask
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-
-import static com.shazam.fork.Fork.Builder.aFork
 
 /**
  * Task for using Fork.
@@ -53,7 +51,7 @@ class ForkRunTask extends DefaultTask implements VerificationTask {
         LOG.debug("Output: $output")
         LOG.debug("Ignore failures: $ignoreFailures")
 
-        Fork.Builder fork = aFork()
+        ForkBuilder fork = aFork()
                 .withApplicationApk(applicationApk)
                 .withInstrumentationApk(instrumentationApk)
                 .withOutputDirectory(output)
