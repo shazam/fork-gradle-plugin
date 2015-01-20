@@ -22,6 +22,8 @@ import org.gradle.api.tasks.VerificationTask
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
+import static com.shazam.fork.ForkBuilder.aFork
+
 /**
  * Task for using Fork.
  */
