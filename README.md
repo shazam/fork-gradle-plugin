@@ -26,3 +26,5 @@ You're now done. You can enable smart pooling by adding runtime parameters (*Poo
 ```groovy
 gradlew tasks #(and optionally | grep fork)
 ```
+
+[![Build Status](https://travis-ci.org/shazam/fork-gradle-plugin.svg?branch=master)](https://travis-ci.org/shazam/fork-gradle-plugin)
