@@ -12,15 +12,30 @@
  */
 package com.shazam.fork.gradle
 
+import java.util.regex.Pattern
+
 /**
  * Fork extension.
  */
 class ForkExtension {
 
-    /** Output directory for Fork report files. If empty, the default dir will be used */
+    /**
+     * Output directory for Fork report files. If empty, the default dir will be used.
+     */
     File baseOutputDir
 
-    /** Ignore test failures flag. */
+    /**
+     * Ignore test failures flag.
+     */
     boolean ignoreFailures
 
+    /**
+     * Regex {@link Pattern} determining the class names to consider when finding tests to run.
+     */
+    Pattern testClassPattern
+
+    /**
+     * Regex {@link Pattern} determining the packages to consider when finding tests to run.
+     */
+    Pattern testPackagePattern
 }

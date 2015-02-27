@@ -107,6 +107,9 @@ class ForkPlugin implements Plugin<Project> {
                 }
                 output = new File(outputBase, projectOutput.dirName)
 
+                testClassPattern = config.testClassPattern
+                testPackagePattern = config.testPackagePattern
+
                 ignoreFailures = config.ignoreFailures
 
                 dependsOn projectOutput.assemble, variant.assemble

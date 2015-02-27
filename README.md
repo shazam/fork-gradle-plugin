@@ -1,5 +1,6 @@
 Fork Gradle Plugin
 ---------------
+[![Build Status](https://travis-ci.org/shazam/fork-gradle-plugin.svg?branch=master)](https://travis-ci.org/shazam/fork-gradle-plugin)
 
 This is the gradle plugin used to run [Fork](https://github.com/shazam/fork) in your Android projects.
 
@@ -27,4 +28,23 @@ You're now done. You can enable smart pooling by adding runtime parameters (*Poo
 gradlew tasks #(and optionally | grep fork)
 ```
 
-[![Build Status](https://travis-ci.org/shazam/fork-gradle-plugin.svg?branch=master)](https://travis-ci.org/shazam/fork-gradle-plugin)
+Fork DSL
+--------
+
+You can specify runtime configuration for Fork with the Fork DSL. Simply add a block to your build.gradle, _e.g.,_:
+
+```groovy
+fork {
+    baseOutputDir "/my_custom_dir"
+}
+```
+
+Property Value     | Default value
+------------------ | -------------
+baseOutputDir      | "fork"
+ignoreFailures     | false
+testClassPattern   | Pattern.compile("^((?!Abstract).)*Test$")
+testPackagePattern | // Calculated at runtime if not set to match your target application package
+
+*Note:* the Fork runtime parameter _android.test.classes_ is applied _after_ both the ```testClassPattern``` and ```testPackagePattern``` filters have been applied.
+
