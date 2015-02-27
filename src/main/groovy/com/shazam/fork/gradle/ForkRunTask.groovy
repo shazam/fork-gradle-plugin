@@ -22,6 +22,8 @@ import org.gradle.api.tasks.VerificationTask
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
+import java.util.regex.Pattern
+
 import static com.shazam.fork.ForkBuilder.aFork
 
 /**
@@ -47,6 +49,10 @@ class ForkRunTask extends DefaultTask implements VerificationTask {
     @OutputDirectory
     File output
 
+    Pattern testClassPattern
+
+    Pattern testPackagePattern
+
     @TaskAction
     void runFork() {
         LOG.info("Run instrumentation tests $instrumentationApk for app $applicationApk")
@@ -58,6 +64,8 @@ class ForkRunTask extends DefaultTask implements VerificationTask {
                 .withInstrumentationApk(instrumentationApk)
                 .withOutputDirectory(output)
                 .withAndroidSdk(project.android.sdkDirectory)
+                .withTestClassPattern(testClassPattern)
+                .withTestPackagePattern(testPackagePattern)
 
         boolean success = fork.build().run()
 
