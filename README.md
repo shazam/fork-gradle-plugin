@@ -12,7 +12,7 @@ First, you need to add a build-script dependency:
 ```groovy
 buildscript {
     dependencies {
-        classpath 'com.shazam.fork:fork-gradle-plugin:0.11.0'
+        classpath 'com.shazam.fork:fork-gradle-plugin:0.12.0'
     }
 }
 ```
