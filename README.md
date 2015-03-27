@@ -43,8 +43,8 @@ Property Value     | Default value
 ------------------ | -------------
 baseOutputDir      | "fork"
 ignoreFailures     | false
-testClassPattern   | Pattern.compile("^((?!Abstract).)*Test$")
-testPackagePattern | // Calculated at runtime if not set to match your target application package
+testClassPattern   | ^((?!Abstract).)*Test$
+testPackagePattern | // Calculated at runtime if not set to match your instrumentation package
 
 *Note:* the Fork runtime parameter _android.test.classes_ is applied _after_ both the ```testClassPattern``` and ```testPackagePattern``` filters have been applied.
 
