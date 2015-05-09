@@ -38,4 +38,9 @@ class ForkExtension {
      * Regex {@link Pattern} determining the packages to consider when finding tests to run.
      */
     Pattern testPackagePattern
+
+    /**
+     * Maximum time in milli-seconds between ADB output during a test. Prevents tests from getting stuck.
+     */
+    int testOutputTimeout
 }

@@ -106,11 +106,10 @@ class ForkPlugin implements Plugin<Project> {
                     outputBase = new File(project.buildDir, "fork")
                 }
                 output = new File(outputBase, projectOutput.dirName)
-
                 testClassPattern = config.testClassPattern
                 testPackagePattern = config.testPackagePattern
-
                 ignoreFailures = config.ignoreFailures
+                testOutputTimeout = config.testOutputTimeout
 
                 dependsOn projectOutput.assemble, variant.assemble
             }
