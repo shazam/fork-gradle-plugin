@@ -53,6 +53,8 @@ class ForkRunTask extends DefaultTask implements VerificationTask {
 
     Pattern testPackagePattern
 
+    int testOutputTimeout
+
     @TaskAction
     void runFork() {
         LOG.info("Run instrumentation tests $instrumentationApk for app $applicationApk")
@@ -66,6 +68,7 @@ class ForkRunTask extends DefaultTask implements VerificationTask {
                 .withAndroidSdk(project.android.sdkDirectory)
                 .withTestClassPattern(testClassPattern)
                 .withTestPackagePattern(testPackagePattern)
+                .withTestOutputTimeout(testOutputTimeout)
 
         boolean success = fork.build().run()
 
