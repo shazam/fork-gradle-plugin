@@ -40,13 +40,14 @@ fork {
 }
 ```
 
-Property Value     | Default value
------------------- | -------------
-baseOutputDir      | "fork"
-ignoreFailures     | false
-testClassPattern   | ^((?!Abstract).)*Test$
-testPackagePattern | // Calculated at runtime if not set to match your instrumentation package
-testOutputTimeout  | 60000
+Property Type     | Property Value         | Default value
+----------------- |----------------------- | -------------
+File              | baseOutputDir          | "fork"
+boolean           | ignoreFailures         | false
+Pattern           | testClassPattern       | ^((?!Abstract).)*Test$
+Pattern           | testPackagePattern     | // Calculated at runtime if not set to match your instrumentation package
+int               | testOutputTimeout      | 60000
+boolean           | fallbackToScreenshots  | true
 
 *Note:* the Fork runtime parameter _android.test.classes_ is applied _after_ both the ```testClassPattern``` and ```testPackagePattern``` filters have been applied.
 

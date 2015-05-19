@@ -43,4 +43,9 @@ class ForkExtension {
      * Maximum time in milli-seconds between ADB output during a test. Prevents tests from getting stuck.
      */
     int testOutputTimeout
+
+    /**
+     * Indicate that screenshots are allowed when videos are not supported.
+     */
+    boolean fallbackToScreenshots
 }

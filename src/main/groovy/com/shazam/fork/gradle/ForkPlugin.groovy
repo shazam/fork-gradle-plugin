@@ -110,6 +110,7 @@ class ForkPlugin implements Plugin<Project> {
                 testPackagePattern = config.testPackagePattern
                 ignoreFailures = config.ignoreFailures
                 testOutputTimeout = config.testOutputTimeout
+                fallbackToScreenshots = config.fallbackToScreenshots;
 
                 dependsOn projectOutput.assemble, variant.assemble
             }
