@@ -55,6 +55,8 @@ class ForkRunTask extends DefaultTask implements VerificationTask {
 
     int testOutputTimeout
 
+    boolean fallbackToScreenshots;
+
     @TaskAction
     void runFork() {
         LOG.info("Run instrumentation tests $instrumentationApk for app $applicationApk")
@@ -69,6 +71,7 @@ class ForkRunTask extends DefaultTask implements VerificationTask {
                 .withTestClassPattern(testClassPattern)
                 .withTestPackagePattern(testPackagePattern)
                 .withTestOutputTimeout(testOutputTimeout)
+                .withFallbackToScreenshots(fallbackToScreenshots)
 
         boolean success = fork.build().run()
 
