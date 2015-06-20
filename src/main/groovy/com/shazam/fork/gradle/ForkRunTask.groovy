@@ -22,8 +22,6 @@ import org.gradle.api.tasks.VerificationTask
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-import java.util.regex.Pattern
-
 import static com.shazam.fork.ForkBuilder.aFork
 
 /**
@@ -49,9 +47,9 @@ class ForkRunTask extends DefaultTask implements VerificationTask {
     @OutputDirectory
     File output
 
-    Pattern testClassPattern
+    String testClassRegex
 
-    Pattern testPackagePattern
+    String testPackage
 
     int testOutputTimeout
 
@@ -68,8 +66,8 @@ class ForkRunTask extends DefaultTask implements VerificationTask {
                 .withInstrumentationApk(instrumentationApk)
                 .withOutputDirectory(output)
                 .withAndroidSdk(project.android.sdkDirectory)
-                .withTestClassPattern(testClassPattern)
-                .withTestPackagePattern(testPackagePattern)
+                .withTestClassRegex(testClassRegex)
+                .withTestPackage(testPackage)
                 .withTestOutputTimeout(testOutputTimeout)
                 .withFallbackToScreenshots(fallbackToScreenshots)
 

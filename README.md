@@ -44,8 +44,8 @@ Property Type     | Property Value         | Default value
 ----------------- |----------------------- | -------------
 File              | baseOutputDir          | "fork"
 boolean           | ignoreFailures         | false
-Pattern           | testClassPattern       | ^((?!Abstract).)*Test$
-Pattern           | testPackagePattern     | // Calculated at runtime if not set to match your instrumentation package
+String            | testClassRegex         | "^((?!Abstract).)*Test$"
+String            | testPackage            | (Your instrumentation APK package)
 int               | testOutputTimeout      | 60000
 boolean           | fallbackToScreenshots  | true
 

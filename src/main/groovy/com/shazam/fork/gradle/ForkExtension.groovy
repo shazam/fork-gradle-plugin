@@ -30,14 +30,14 @@ class ForkExtension {
     boolean ignoreFailures
 
     /**
-     * Regex {@link Pattern} determining the class names to consider when finding tests to run.
+     * Regex determining the class names to consider when finding tests to run.
      */
-    Pattern testClassPattern
+    String testClassRegex
 
     /**
-     * Regex {@link Pattern} determining the packages to consider when finding tests to run.
+     * The package to consider when scanning for instrumentation tests to run.
      */
-    Pattern testPackagePattern
+    String testPackage
 
     /**
      * Maximum time in milli-seconds between ADB output during a test. Prevents tests from getting stuck.
